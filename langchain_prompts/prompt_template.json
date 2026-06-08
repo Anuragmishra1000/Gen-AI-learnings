@@ -1,0 +1,17 @@
+{
+    "name": null,
+    "input_variables": [
+        "length_input",
+        "paper_input",
+        "style_input"
+    ],
+    "optional_variables": [],
+    "output_parser": null,
+    "partial_variables": {},
+    "metadata": null,
+    "tags": null,
+    "template": "You are an expert AI researcher. Explain the research paper \"{paper_input}\" in a {style_input} style. Provide a {length_input} explanation covering the key contributions, methodology, and impact of the paper.",
+    "template_format": "f-string",
+    "validate_template": true,
+    "_type": "prompt"
+}

@@ -2,7 +2,7 @@ from langchain_groq import ChatGroq
 from dotenv import load_dotenv
 import streamlit as st
 import os
-from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts import load_prompt
 
 load_dotenv()
 
@@ -34,24 +34,19 @@ length_input = st.selectbox("Select Explanation Length", [
     "Long (detailed explanation)",
 ])
 
-template = PromptTemplate(
-    input_variables=["paper_input", "style_input", "length_input"],
-    template=(
-        'You are an expert AI researcher. Explain the research paper "{paper_input}" '
-        "in a {style_input} style. Provide a {length_input} explanation covering the "
-        "key contributions, methodology, and impact of the paper."
-    ),
-)
+template = load_prompt('prompt_template.json')
 
 if st.button("Summarize"):
     try:
         st.text("Summarizing...")
-        prompt = template.invoke({
+        chain = template | model
+
+        response = chain.invoke({
             "paper_input": paper_input,
             "style_input": style_input,
             "length_input": length_input,
         })
-        response = model.invoke(prompt)
+
         st.write(response.content)
     except Exception as e:
         st.error(f"Error: {str(e)}")
